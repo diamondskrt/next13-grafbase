@@ -1,0 +1,12 @@
+{
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.tabSize": 2,
+  "typescript.preferences.quoteStyle": "double",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+}

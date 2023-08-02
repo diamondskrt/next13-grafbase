@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# grafbase
+/.grafbase/
+
 # production
 /build
 
@@ -26,6 +29,9 @@ yarn-error.log*
 
 # local env files
 .env*.local
+
+# production env files
+.env*.production
 
 # vercel
 .vercel
