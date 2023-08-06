@@ -1,4 +1,24 @@
-import { User as UserFromAuth, Session } from 'next-auth';
+import { User as UserFromAuth } from 'next-auth';
+
+export interface FormInputs {
+  image?: File;
+  title: string;
+  description: string;
+  siteUrl?: string;
+  githubUrl?: string;
+  linkedInUrl?: string;
+  category: string;
+}
+
+export interface FormInputsDto {
+  image: string | ArrayBuffer;
+  title: string;
+  description: string;
+  siteUrl?: string;
+  githubUrl?: string;
+  linkedInUrl?: string;
+  category: string;
+}
 
 export interface CreatedBy {
   name: string;
@@ -41,10 +61,9 @@ export interface UserProfile {
   description: string | null;
   avatarUrl: string;
   githubUrl: string | null;
-  linkedinUrl: string | null;
+  linkedInUrl: string | null;
   projects: Projects;
 }
-
 export interface User {
   id: string;
   name: string;
@@ -58,6 +77,4 @@ export interface AdapterUser extends UserFromAuth {
   emailVerified: Date | null;
 }
 
-export interface SessionInterface extends Session {
-  user: UserFromAuth & User;
-}
+export type SessionUser = User & UserFromAuth;

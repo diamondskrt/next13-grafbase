@@ -28,10 +28,6 @@ export const footerLinks = [
     ]
   },
   {
-    title: 'Brands',
-    links: ['Advertise with us']
-  },
-  {
     title: 'Company',
     links: [
       'About',
@@ -74,5 +70,60 @@ export const footerLinks = [
       'Creative Process',
       'Development Industry Trends'
     ]
+  }
+];
+
+export const categories = [
+  {
+    id: 1,
+    name: 'Frontend'
+  },
+  {
+    id: 2,
+    name: 'Backend'
+  },
+  {
+    id: 3,
+    name: 'Full-Stack'
+  },
+  {
+    id: 4,
+    name: 'Mobile'
+  },
+  {
+    id: 5,
+    name: 'UI/UX'
+  },
+  {
+    id: 6,
+    name: 'Game Dev'
+  },
+  {
+    id: 7,
+    name: 'DevOps'
+  },
+  {
+    id: 8,
+    name: 'Data Science'
+  },
+  {
+    id: 9,
+    name: 'Machine Learning'
+  },
+  {
+    id: 10,
+    name: 'Cybersecurity'
+  },
+  {
+    id: 11,
+    name: 'Blockchain'
+  },
+  {
+    id: 12,
+    name: 'E-commerce'
+  },
+  {
+    id: 13,
+    name: 'Chatbots'
   }
 ];

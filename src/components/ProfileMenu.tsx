@@ -1,29 +1,29 @@
 'use client';
 
-import { FC, Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import {
   UserCircleIcon,
   Cog6ToothIcon,
   ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/solid';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { signOut } from 'next-auth/react';
-import { SessionInterface } from '@/types/common';
 import ConfirmDialog from './ConfirmDialog';
 import Typography from './Typography';
+import AuthProviders from './AuthProviders';
+import Button from './Button';
+import { SessionUser } from '@/types/common';
 
-interface ProfileMenuProps {
-  session: SessionInterface;
-}
+const ProfileMenu = () => {
+  const session = useSession();
 
-const ProfileMenu: FC<ProfileMenuProps> = ({ session }) => {
+  const user = session.data?.user as SessionUser;
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  if (!session.user) return null;
-
-  const getShortUserName = (username?: string) => {
+  const getShortUserName = (username?: string | null) => {
     if (!username) return 'U';
 
     return username
@@ -33,15 +33,15 @@ const ProfileMenu: FC<ProfileMenuProps> = ({ session }) => {
       .toUpperCase();
   };
 
-  return (
-    <div>
+  return user ? (
+    <>
       <Popover className="relative">
         {({ open }) => (
           <>
             <Popover.Button as={Fragment}>
               <div className="grid primary justify-center items-center w-[42px] h-[42px] rounded-full cursor-pointer">
                 <Typography variant="body">
-                  {getShortUserName(session.user.name)}
+                  {getShortUserName(user.name)}
                 </Typography>
               </div>
             </Popover.Button>
@@ -63,13 +63,14 @@ const ProfileMenu: FC<ProfileMenuProps> = ({ session }) => {
                 <div className="overflow-hidden rounded-lg shadow-lg">
                   <div className="grid divide-y theme-devide theme-bg">
                     <div className="flex items-center gap-2 p-4">
-                      {session.user.image ? (
+                      {user.image ? (
                         <Image
-                          src={session.user.image}
+                          src={user.image}
+                          blurDataURL={user.image}
                           width={42}
                           height={42}
                           className="rounded-full cursor-pointer"
-                          alt={session.user.name}
+                          alt={user.name}
                         />
                       ) : (
                         <div
@@ -81,26 +82,22 @@ const ProfileMenu: FC<ProfileMenuProps> = ({ session }) => {
                         </div>
                       )}
                       <div>
-                        <Typography variant="caption">
-                          {session.user.name}
-                        </Typography>
-                        <Typography variant="caption">
-                          {session.user.email}
-                        </Typography>
+                        <Typography variant="caption">{user.name}</Typography>
+                        <Typography variant="caption">{user.email}</Typography>
                       </div>
                     </div>
 
                     <div>
-                      <Link href={`profile/${session.user.id}`}>
-                        <div className="profile_item">
+                      <Link href={`profile/${user.id}`}>
+                        <div className="menu_item">
                           <UserCircleIcon className="h-6 w-6" />
                           <Typography variant="caption" className="ml-2">
                             Profile
                           </Typography>
                         </div>
                       </Link>
-                      <Link href={`profile/${session.user.id}`}>
-                        <div className="profile_item">
+                      <Link href={`profile/${user.id}`}>
+                        <div className="menu_item">
                           <Cog6ToothIcon className="h-6 w-6" />
                           <Typography variant="caption" className="ml-2">
                             Settings
@@ -133,7 +130,13 @@ const ProfileMenu: FC<ProfileMenuProps> = ({ session }) => {
         onClose={() => setIsDialogOpen(false)}
         onConfirm={() => signOut()}
       />
-    </div>
+
+      <Link href="/create-project">
+        <Button>Share Work</Button>
+      </Link>
+    </>
+  ) : (
+    <AuthProviders />
   );
 };
 

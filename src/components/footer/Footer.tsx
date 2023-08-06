@@ -8,46 +8,38 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="flexStart flex-col w-full gap-20 paddings">
-      <div className="flex flex-col gap-12 w-full">
-        <div className="flex flex-wrap gap-12">
-          <FooterColumn
-            title={footerLinks[0].title}
-            links={footerLinks[0].links}
-          />
-
-          <div className="flex-1 flex flex-col gap-4">
-            <FooterColumn
-              title={footerLinks[1].title}
-              links={footerLinks[1].links}
-            />
-            <FooterColumn
-              title={footerLinks[2].title}
-              links={footerLinks[2].links}
-            />
-          </div>
-
-          <FooterColumn
-            title={footerLinks[3].title}
-            links={footerLinks[3].links}
-          />
-
-          <div className="flex-1 flex flex-col gap-4">
-            <FooterColumn
-              title={footerLinks[4].title}
-              links={footerLinks[4].links}
-            />
-            <FooterColumn
-              title={footerLinks[5].title}
-              links={footerLinks[5].links}
-            />
-          </div>
-
-          <FooterColumn
-            title={footerLinks[6].title}
-            links={footerLinks[6].links}
-          />
-        </div>
+    <footer className="grid gap-20 paddings">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5 gap-5">
+        <FooterColumn
+          title={footerLinks[0].title}
+          links={footerLinks[0].links}
+          className="hidden sm:grid auto-rows-min gap-3"
+        />
+        <FooterColumn
+          title={footerLinks[1].title}
+          links={footerLinks[1].links}
+          className="hidden sm:grid auto-rows-min gap-3"
+        />
+        <FooterColumn
+          title={footerLinks[2].title}
+          links={footerLinks[2].links}
+          className="text-center sm:text-left grid auto-rows-min gap-3"
+        />
+        <FooterColumn
+          title={footerLinks[3].title}
+          links={footerLinks[3].links}
+          className="hidden sm:grid auto-rows-min gap-3"
+        />
+        <FooterColumn
+          title={footerLinks[4].title}
+          links={footerLinks[4].links}
+          className="hidden sm:grid auto-rows-min gap-3"
+        />
+        <FooterColumn
+          title={footerLinks[5].title}
+          links={footerLinks[5].links}
+          className="hidden sm:grid auto-rows-min gap-3"
+        />
       </div>
 
       <div className="flexBetween max-sm:flex-col w-full">

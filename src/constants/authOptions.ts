@@ -1,9 +1,9 @@
 import { createUser, getUser } from '@/graphql/api';
-import { NextAuthOptions, User, getServerSession } from 'next-auth';
+import { NextAuthOptions, User } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';
 import jsonwebtoken from 'jsonwebtoken';
-import { AdapterUser, SessionInterface, UserProfile } from '@/types/common';
+import { AdapterUser, UserProfile } from '@/types/common';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -17,8 +17,8 @@ export const authOptions: NextAuthOptions = {
       const encodedToken = await jsonwebtoken.sign(
         {
           ...token,
-          issuer: 'grafbase',
-          expiresIn: Math.floor(Date.now() / 1000) + 60 * 60
+          iss: 'grafbase',
+          exp: Math.floor(Date.now() / 1000) + 60 * 60
         },
         secret
       );
@@ -74,10 +74,4 @@ export const authOptions: NextAuthOptions = {
       }
     }
   }
-};
-
-export const getSession = async () => {
-  const session = (await getServerSession(authOptions)) as SessionInterface;
-
-  return session;
 };

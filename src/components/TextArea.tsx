@@ -1,10 +1,12 @@
 import classNames from 'classnames';
 import { FC, InputHTMLAttributes } from 'react';
+import Typography from './Typography';
 
 interface TextAreaProps extends InputHTMLAttributes<HTMLTextAreaElement> {
   defaultValue?: string;
   label?: string;
   required?: boolean;
+  errorMessage?: string;
   register?: any;
   rows?: number;
 }
@@ -15,6 +17,7 @@ const TextArea: FC<TextAreaProps> = (props) => {
     label,
     rows = 3,
     required,
+    errorMessage,
     register,
     ...otherProps
   } = props;
@@ -31,8 +34,14 @@ const TextArea: FC<TextAreaProps> = (props) => {
           {...register}
           {...otherProps}
           rows={rows}
-          className="w-full border-b border-zinc-400 focus:border-indigo-600 outline-0 transition-all py-1"
+          className={classNames('textarea', { error: errorMessage })}
         />
+
+        {errorMessage ? (
+          <Typography variant="caption" className="error--text mt-1">
+            {errorMessage}
+          </Typography>
+        ) : null}
       </label>
     </>
   );

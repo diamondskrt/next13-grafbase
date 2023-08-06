@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import classNames from 'classnames';
-import Image from 'next/image';
+import Icon from './Icon';
 
 interface ButtonProps {
   children: ReactNode;
@@ -30,13 +30,11 @@ const Button: FC<ButtonProps> = ({
       className={classNames(`btn-${variant}`, className)}
       onClick={onClick}
     >
-      {leftIcon && (
-        <Image src={leftIcon} width={14} height={14} alt="left icon" />
-      )}
-      {children}
-      {rightIcon && (
-        <Image src={rightIcon} width={14} height={14} alt="right icon" />
-      )}
+      <div className="flexStart gap-2">
+        {leftIcon && <Icon name={leftIcon} size={16} />}
+        {children}
+        {rightIcon && <Icon name={rightIcon} size={16} />}
+      </div>
     </button>
   );
 };

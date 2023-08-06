@@ -1,14 +1,20 @@
 import { FC } from 'react';
 import Link from 'next/link';
+import classNames from 'classnames';
 import Typography from '../Typography';
 
 interface FooterColumnProps {
   title: string;
   links: string[];
+  className?: string;
 }
 
-export const FooterColumn: FC<FooterColumnProps> = ({ title, links }) => (
-  <div className="flex flex-1 flex-col gap-3 min-w-max">
+export const FooterColumn: FC<FooterColumnProps> = ({
+  title,
+  links,
+  className
+}) => (
+  <div className={classNames('footer-column', className)}>
     <Typography variant="subtitle">{title}</Typography>
     <ul className="flex flex-col gap-2 default--text">
       {links.map((link) => (

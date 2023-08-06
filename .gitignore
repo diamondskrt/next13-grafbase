@@ -14,6 +14,7 @@
 
 # grafbase
 /.grafbase/
+/grafbase/.env
 
 # production
 /build

@@ -3,7 +3,7 @@ import { DynamoDBModel } from '@grafbase/sdk/dist/src/connector/dynamodb/model';
 
 const authProvider = auth.JWT({
   issuer: 'grafbase',
-  secret: process.env.NEXTAUTH_SECRET ?? ''
+  secret: '{{ env.NEXTAUTH_SECRET }}'
 });
 
 const user: DynamoDBModel = g
