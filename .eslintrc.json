@@ -16,6 +16,7 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint"],
+  "ignorePatterns": ["src/graphql/queries.ts"],
   "rules": {
     "max-len": ["error", { "code": 120, "tabWidth": 2 }],
     "semi": "off",
@@ -24,7 +25,6 @@
     "@typescript-eslint/comma-dangle":["error", "never"],
     "quotes": ["error", "single"],
     "jsx-quotes": ["error", "prefer-double"],
-    "indent": ["error", 2],
     "object-curly-spacing": ["error", "always"],
     "no-unused-vars": "off",
     "no-console": ["warn", { "allow": ["warn", "error"] }],

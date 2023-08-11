@@ -6,8 +6,12 @@ interface ButtonProps {
   children: ReactNode;
   leftIcon?: string;
   rightIcon?: string;
-  variant?: string;
+  icon?: boolean;
+  text?: boolean;
+  variant?: 'icon' | 'text' | 'default';
+  color?: 'primary' | 'secondary';
   loading?: boolean;
+  disabled?: boolean;
   type?: 'button' | 'submit';
   className?: string;
   onClick?: () => void;
@@ -17,8 +21,10 @@ const Button: FC<ButtonProps> = ({
   children,
   leftIcon,
   rightIcon,
-  variant = 'primary',
+  variant,
+  color = 'primary',
   loading,
+  disabled,
   type = 'button',
   className,
   onClick
@@ -26,8 +32,8 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       type={type}
-      disabled={loading}
-      className={classNames(`btn-${variant}`, className)}
+      disabled={loading || disabled}
+      className={classNames(`btn btn-${color}`, className, variant)}
       onClick={onClick}
     >
       <div className="flexStart gap-2">

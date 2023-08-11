@@ -60,7 +60,7 @@ const ProfileMenu = () => {
                   'absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-xs'
                 }
               >
-                <div className="overflow-hidden rounded-lg shadow-lg">
+                <div className="rounded-md shadow-lg">
                   <div className="grid divide-y theme-devide theme-bg">
                     <div className="flex items-center gap-2 p-4">
                       {user.image ? (

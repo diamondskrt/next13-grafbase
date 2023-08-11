@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import CreateProjectForm from '@/components/CreateProjectForm';
+import ProjectForm from '@/components/ProjectForm';
 import Typography from '@/components/Typography';
 
 const CreateProject = () => {
@@ -11,13 +11,11 @@ const CreateProject = () => {
   if (session.status === 'unauthenticated') redirect('/');
 
   return (
-    <>
-      <section>
-        <Typography variant="h1">Create Project</Typography>
+    <div className="create-project">
+      <Typography variant="h1">Create Project</Typography>
 
-        <CreateProjectForm />
-      </section>
-    </>
+      <ProjectForm />
+    </div>
   );
 };
 

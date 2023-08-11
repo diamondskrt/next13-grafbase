@@ -14,9 +14,9 @@ export const FooterColumn: FC<FooterColumnProps> = ({
   links,
   className
 }) => (
-  <div className={classNames('footer-column', className)}>
+  <div className={classNames('flex flex-col gap-2', className)}>
     <Typography variant="subtitle">{title}</Typography>
-    <ul className="flex flex-col gap-2 default--text">
+    <ul className="grid gap-2 default--text">
       {links.map((link) => (
         <Link href="/" key={link}>
           <li>

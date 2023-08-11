@@ -1,22 +1,12 @@
 import { User as UserFromAuth } from 'next-auth';
 
 export interface FormInputs {
-  image?: File;
+  image: string;
   title: string;
   description: string;
-  siteUrl?: string;
-  githubUrl?: string;
-  linkedInUrl?: string;
-  category: string;
-}
-
-export interface FormInputsDto {
-  image: string | ArrayBuffer;
-  title: string;
-  description: string;
-  siteUrl?: string;
-  githubUrl?: string;
-  linkedInUrl?: string;
+  siteUrl: string;
+  githubUrl: string;
+  linkedInUrl: string;
   category: string;
 }
 
@@ -31,11 +21,14 @@ export interface Project {
   title: string;
   description: string;
   image: string;
-  liveSiteUrl: string;
+  siteUrl: string;
   githubUrl: string;
   category: string;
   id: string;
   createdBy: CreatedBy;
+}
+export interface Edge {
+  node: Project;
 }
 
 export interface PageInfo {
@@ -45,13 +38,25 @@ export interface PageInfo {
   endCursor: string;
 }
 
-export interface Edge {
-  node: Project;
-}
-
 export interface Projects {
   edges: Edge[];
   pageInfo: PageInfo;
+}
+
+export interface ProjectInterface {
+  title: string;
+  description: string;
+  image: string;
+  siteUrl: string;
+  githubUrl: string;
+  category: string;
+  id: string;
+  createdBy: {
+    name: string;
+    email: string;
+    avatarUrl: string;
+    id: string;
+  };
 }
 
 export interface UserProfile {
@@ -64,6 +69,7 @@ export interface UserProfile {
   linkedInUrl: string | null;
   projects: Projects;
 }
+
 export interface User {
   id: string;
   name: string;

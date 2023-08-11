@@ -72,11 +72,7 @@ export const deleteProjectMutation = gql`
 
 export const projectsQuery = gql`
   query getProjects($category: String, $endcursor: String) {
-    projectSearch(
-      first: 8
-      after: $endcursor
-      filter: { category: { eq: $category } }
-    ) {
+    projectSearch(first: 8, after: $endcursor, filter: { category: { regex: $category }}) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -88,7 +84,7 @@ export const projectsQuery = gql`
           title
           githubUrl
           description
-          liveSiteUrl
+          siteUrl
           id
           image
           category
@@ -111,7 +107,7 @@ export const getProjectByIdQuery = gql`
       title
       description
       image
-      liveSiteUrl
+      siteUrl
       githubUrl
       category
       createdBy {

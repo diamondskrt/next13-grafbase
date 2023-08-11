@@ -2,9 +2,14 @@ import { GraphQLClient } from 'graphql-request';
 import {
   createProjectMutation,
   createUserMutation,
-  getUserQuery
+  deleteProjectMutation,
+  getProjectByIdQuery,
+  getProjectsOfUserQuery,
+  getUserQuery,
+  projectsQuery,
+  updateProjectMutation
 } from './queries';
-import { FormInputsDto } from '@/types/common';
+import { FormInputs } from '@/types/common';
 
 const grafbaseApiUrl = process.env.NEXT_PUBLIC_GRAFBASE_API_URL ?? '';
 const grafbaseApiKey = process.env.NEXT_PUBLIC_GRAFBASE_API_KEY ?? '';
@@ -81,9 +86,9 @@ export const createUser = (
 };
 
 export const createProject = async (
-  formInputs: FormInputsDto,
-  creatorId: string,
-  token: string
+  formInputs: FormInputs,
+  token: string,
+  creatorId: string
 ) => {
   const imageUrl = await uploadImage(formInputs.image);
 
@@ -101,5 +106,66 @@ export const createProject = async (
 
   return makeGraphQLRequest(createProjectMutation, variables, {
     Authorization: `Bearer ${token}`
+  });
+};
+
+export const updateProject = async (
+  formInputs: FormInputs,
+  token: string,
+  projectId: string
+) => {
+  const isBase64File = (data: string) => {
+    const base64Regex = /^data:[a-zA-Z0-9/+]+;base64,/;
+
+    return base64Regex.test(data);
+  };
+
+  if (isBase64File(formInputs.image)) {
+    const imageUrl = await uploadImage(formInputs.image);
+
+    if (!imageUrl.url) return;
+
+    formInputs.image = imageUrl.url;
+  }
+
+  const variables = {
+    id: projectId,
+    input: formInputs
+  };
+
+  return makeGraphQLRequest(updateProjectMutation, variables, {
+    Authorization: `Bearer ${token}`
+  });
+};
+
+export const fetchAllProjects = (category: string = '', endcursor?: string) => {
+  const variables = { category: `.*${category}.*`, endcursor };
+
+  return makeGraphQLRequest(projectsQuery, variables, {
+    'x-api-key': grafbaseApiKey
+  });
+};
+
+export const getProjectById = (id: string) => {
+  const variables = { id };
+
+  return makeGraphQLRequest(getProjectByIdQuery, variables, {
+    'x-api-key': grafbaseApiKey
+  });
+};
+
+export const deleteProject = (id: string, token: string) => {
+  const variables = { id };
+
+  return makeGraphQLRequest(deleteProjectMutation, variables, {
+    Authorization: `Bearer ${token}`
+  });
+};
+
+export const getUserProjects = (id: string, last?: number) => {
+  const variables = { id, last };
+
+  return makeGraphQLRequest(getProjectsOfUserQuery, variables, {
+    'x-api-key': grafbaseApiKey
   });
 };

@@ -2,7 +2,7 @@ import { FC, ReactNode, createElement } from 'react';
 import classNames from 'classnames';
 
 interface TypographyProps {
-  variant: string;
+  variant: 'h1' | 'h3' | 'h5' | 'subtitle' | 'body' | 'caption';
   className?: string;
   children: ReactNode;
 }

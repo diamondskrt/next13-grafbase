@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
-import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Providers from './providers';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/footer';
+import './styles/globals.css';
+import Providers from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +23,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={inter.className}>
         <Providers>
           <Navbar />
-          <main className="flex-start flex-col paddings">{children}</main>
+          <main className="flex-start flex-col mainPaddings">{children}</main>
           <Footer />
         </Providers>
       </body>

@@ -1,73 +1,66 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { categories } from '@/constants/common';
-import { FormInputs, SessionUser } from '@/types/common';
-import { createProject, fetchToken } from '@/graphql/api';
+import { FormInputs, ProjectInterface, SessionUser } from '@/types/common';
+import { createProject, fetchToken, updateProject } from '@/graphql/api';
 import FileInput from './FileInput';
 import TextField from './TextField';
 import TextArea from './TextArea';
 import Button from './Button';
 import Select from './Select';
 
-interface CreateProjectFormProps {}
+interface ProjectFormProps {
+  project?: ProjectInterface;
+}
 
-const CreateProjectForm: FC<CreateProjectFormProps> = () => {
+const ProjectForm: FC<ProjectFormProps> = ({ project }) => {
   const session = useSession();
 
   const router = useRouter();
+
+  const isEditMode = useMemo(() => Boolean(project), [project]);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     control,
     handleSubmit,
-    formState: { isLoading, errors }
-  } = useForm<FormInputs>();
-
-  const convertImage = (
-    image: File,
-    callbackFn: (base64Image: string | ArrayBuffer | null) => void
-  ) => {
-    const reader = new FileReader();
-
-    reader.readAsDataURL(image);
-
-    reader.onload = () => {
-      callbackFn(reader.result);
-    };
-  };
+    formState: { errors }
+  } = useForm<FormInputs>({
+    defaultValues: {
+      image: project?.image || '',
+      title: project?.title || '',
+      description: project?.description || '',
+      siteUrl: project?.siteUrl || '',
+      githubUrl: project?.githubUrl || '',
+      category: project?.category || ''
+    }
+  });
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    const { image } = data;
+    const { token } = await fetchToken();
 
-    if (!image) {
-      console.error('image loading error');
-      return;
-    }
+    try {
+      setIsLoading(true);
 
-    convertImage(image, async (base64Image: string | ArrayBuffer | null) => {
-      if (!base64Image) {
-        console.error('image loading error');
-        return;
-      }
-
-      try {
-        const formInputs = { ...data, image: base64Image };
-
-        const { token } = await fetchToken();
-
+      if (isEditMode) {
+        await updateProject(data, token, project!.id);
+      } else {
         const user = session.data?.user as SessionUser;
-
-        await createProject(formInputs, user.id, token);
-
-        router.push('/');
-      } catch (error) {
-        console.error(error);
+        await createProject(data, token, user.id);
       }
-    });
+
+      router.push('/');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -80,7 +73,7 @@ const CreateProjectForm: FC<CreateProjectFormProps> = () => {
         render={({ field }) => {
           return (
             <FileInput
-              file={field.value}
+              fileUrl={field.value}
               label="File"
               accept="image/*"
               description="Choose a poster for your project"
@@ -161,11 +154,11 @@ const CreateProjectForm: FC<CreateProjectFormProps> = () => {
 
       <div className="actions">
         <Button leftIcon="plus" loading={isLoading} type="submit">
-          Create
+          {isEditMode ? 'Update' : 'Create'}
         </Button>
       </div>
     </form>
   );
 };
 
-export default CreateProjectForm;
+export default ProjectForm;
