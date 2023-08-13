@@ -8,10 +8,13 @@ interface ButtonProps {
   rightIcon?: string;
   icon?: boolean;
   text?: boolean;
+  // @todo enum
   variant?: 'icon' | 'text' | 'default';
-  color?: 'primary' | 'secondary';
+  // @todo enum
+  color?: 'primary' | 'dark' | 'light';
   loading?: boolean;
   disabled?: boolean;
+  // @todo enum
   type?: 'button' | 'submit';
   className?: string;
   onClick?: () => void;

@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { getProjectById } from '@/graphql/api';
 import { ProjectInterface } from '@/types/common';
 import Typography from '@/components/Typography';
-import RelatedProjects from '@/components/RelatedProjects';
-import ProjectActions from '@/components/ProjectActions';
+import RelatedProjects from '@/components/pages/project/RelatedProjects';
+import ProjectActions from '@/components/pages/project/ProjectActions';
 
 interface ProjectPageParams {
   id: string;
@@ -25,22 +25,20 @@ const ProjectPage: FC<ProjectPageProps> = async ({ params: { id } }) => {
   const project = result?.project;
 
   return (
-    <div>
+    <div className="paddings">
       {project ? (
         <div className="grid gap-10">
           <div>
-            <div className="flexBetween">
+            <div className="flex flex-col sm:flex-row justify-between gap-4">
               <div className="flexStart gap-2">
-                <Link href={`/profile/${project.createdBy.id}`}>
-                  <Image
-                    src={project.createdBy.avatarUrl}
-                    blurDataURL={project.createdBy.avatarUrl}
-                    width={50}
-                    height={50}
-                    alt="profile"
-                    className="rounded-full"
-                  />
-                </Link>
+                <Image
+                  src={project.createdBy.avatarUrl}
+                  blurDataURL={project.createdBy.avatarUrl}
+                  width={50}
+                  height={50}
+                  alt="profile"
+                  className="rounded-full"
+                />
                 <div className="grid">
                   <Typography variant="subtitle" className="font-semibold">
                     {project.title}
@@ -67,14 +65,14 @@ const ProjectPage: FC<ProjectPageProps> = async ({ params: { id } }) => {
               />
             </div>
 
-            <div className="grid w-[40%] gap-4 mt-6">
-              <div className="relative aspect-square w-[400px]">
+            <div className="grid gap-4 mt-6">
+              <div className="grid w-[100%] sm:w-[400px] h-[300px] relative">
                 <Image
                   src={project.image}
                   blurDataURL={project.image}
                   fill
                   alt={project.title}
-                  className="rounded-xl"
+                  className="rounded-xl object-cover"
                 />
               </div>
               <Typography variant="body">{project.description}</Typography>

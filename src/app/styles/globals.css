@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'swiper/css';
+
 :root {
   --background: rgb(255,255,255);
   --color: #000;
@@ -14,7 +16,12 @@
 
 body {
   color: var(--color);
-  background: var(--background)
+  background: var(--background);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.no-scroll {
+  position: fixed;
 }
 
 ::-webkit-scrollbar {
@@ -26,20 +33,28 @@ body {
   background: #888;
 }
 
-.btn:not(.icon) {
-  @apply text-sm leading-6 outline-none rounded-md px-3.5 py-2;
-}
-
 .btn {
-  @apply cursor-pointer whitespace-nowrap select-none
+  @apply whitespace-nowrap select-none outline-none touch-none;
 }
 
 .btn.btn-primary:not([disabled]):not(.text):not(.icon) {
   @apply bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm transition-all;
 }
 
+.btn.btn-dark:not([disabled]):not(.text):not(.icon) {
+  @apply bg-black hover:bg-zinc-800 text-white shadow-sm transition-all;
+}
+
+.btn.btn-light:not([disabled]):not(.text):not(.icon) {
+  @apply bg-white hover:bg-zinc-100 text-black shadow-sm transition-all;
+}
+
+.btn:not(.icon) {
+  @apply text-sm leading-6 rounded-md px-3.5 py-2;
+}
+
 .btn.icon {
-  @apply flexCenter rounded-full w-[36px] h-[36px] bg-black/10 dark:bg-white/10;
+  @apply flexCenter rounded-full w-[36px] h-[36px] theme-hover-dark;
 }
 
 .btn.icon svg {
@@ -78,6 +93,10 @@ input[type='file'] {
 
 .theme-hover {
   @apply hover:bg-[rgb(244,244,244)] dark:hover:bg-[rgb(91,91,91)]
+}
+
+.theme-hover-dark {
+  @apply hover:bg-black/10 hover:dark:bg-white/10
 }
 
 .theme-bg {
@@ -148,11 +167,48 @@ input[type='file'] {
 }
 
 .paddings {
-  @apply lg:px-20 py-6 px-5;
+  @apply px-5 lg:px-20 pt-6 lg:pt-10 pb-20;
 }
 
-.mainPaddings {
-  @apply lg:px-20 py-12 px-5;
+.navbar {
+  @apply fixed top-0 inset-x-0 z-10 flexBetween h-[60px] sm:h-[70px] bg-indigo-600 dark:bg-zinc-900 shadow-md shadow-black/20 gap-4 px-2 sm:px-8;
+}
+
+.drawer-menu-link {
+  @apply relative bg-center bg-cover;
+}
+
+.drawer-menu-link::before {
+  content: '';
+  @apply absolute inset-0 bg-black/60;
+}
+
+.drawer-menu-link li {
+  position: relative;
+}
+
+.drawer-menu-link:nth-child(1) {
+  background-image: url('/images/inspiration.jpg');
+}
+
+.drawer-menu-link:nth-child(2) {
+  background-image: url('/images/find-projects.jpg');
+}
+
+.drawer-menu-link:nth-child(3) {
+  background-image: url('/images/learn-development.jpg');
+}
+
+.drawer-menu-link:nth-child(4) {
+  background-image: url('/images/career-advancement.jpg');
+}
+
+.drawer-menu-link:nth-child(5) {
+  background-image: url('/images/hire-developers.jpg');
+}
+
+.avatar {
+  @apply grid bg-black dark:bg-white text-white dark:text-black justify-center items-center w-[48px] h-[48px] rounded-full select-none cursor-pointer;
 }
 
 .select.active .text-field .append-icon {
@@ -160,7 +216,7 @@ input[type='file'] {
 }
 
 .select-menu {
-  @apply absolute top-full left-0 w-full shadow shadow-black/20 bg-white rounded-sm max-h-[200px] overflow-y-scroll py-2
+  @apply absolute top-full left-0 w-full shadow shadow-black/20 bg-white rounded-sm max-h-[200px] overflow-y-scroll py-2;
 }
 
 .menu_item {
@@ -185,4 +241,3 @@ input[type='file'] {
 .card-grid {
   @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4
 }
-

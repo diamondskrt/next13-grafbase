@@ -11,8 +11,8 @@ const CreateProject = () => {
   if (session.status === 'unauthenticated') redirect('/');
 
   return (
-    <div className="create-project">
-      <Typography variant="h1">Create Project</Typography>
+    <div className="create-project grid gap-4 paddings">
+      <Typography variant="h3">Create Project</Typography>
 
       <ProjectForm />
     </div>

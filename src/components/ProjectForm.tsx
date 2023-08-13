@@ -1,12 +1,12 @@
 'use client';
 
 import { FC, useMemo, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { categories } from '@/constants/common';
-import { FormInputs, ProjectInterface, SessionUser } from '@/types/common';
 import { createProject, fetchToken, updateProject } from '@/graphql/api';
+import { FormInputs, ProjectInterface, SessionUser } from '@/types/common';
 import FileInput from './FileInput';
 import TextField from './TextField';
 import TextArea from './TextArea';
@@ -55,6 +55,10 @@ const ProjectForm: FC<ProjectFormProps> = ({ project }) => {
         await createProject(data, token, user.id);
       }
 
+      /* Not working
+        export const revalidate = 0;
+      */
+      router.refresh();
       router.push('/');
     } catch (error) {
       console.error(error);

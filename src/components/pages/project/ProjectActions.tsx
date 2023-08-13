@@ -1,14 +1,14 @@
 'use client';
 
 import { FC, useState } from 'react';
+import classNames from 'classnames';
+import { TrashIcon, PencilIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { TrashIcon, PencilIcon } from '@heroicons/react/24/solid';
-import classNames from 'classnames';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import { deleteProject, fetchToken } from '@/graphql/api';
 import { SessionUser } from '@/types/common';
-import ConfirmDialog from './ConfirmDialog';
 
 interface ProjectActionsProps {
   projectId: string;
@@ -33,6 +33,10 @@ const ProjectActions: FC<ProjectActionsProps> = ({
 
       await deleteProject(projectId, token);
 
+      /* Not working
+        export const revalidate = 0;
+      */
+      router.refresh();
       router.push('/');
     } catch (error) {
       console.error(error);
@@ -47,7 +51,7 @@ const ProjectActions: FC<ProjectActionsProps> = ({
 
   return (
     <>
-      <div className="flexStart gap-2">
+      <div className="flex gap-2">
         <Link href={`/edit-project/${projectId}`}>
           <div className="btn icon">
             <PencilIcon />

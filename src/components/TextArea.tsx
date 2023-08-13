@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import { FC, InputHTMLAttributes } from 'react';
+import classNames from 'classnames';
 import Typography from './Typography';
 
 interface TextAreaProps extends InputHTMLAttributes<HTMLTextAreaElement> {

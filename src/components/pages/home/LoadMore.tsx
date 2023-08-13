@@ -1,10 +1,9 @@
 'use client';
 
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useRouter } from 'next/navigation';
+import Button from '@/components/Button';
 import { PageInfo } from '@/types/common';
-import Button from './Button';
-import { freemem } from 'os';
 
 interface LoadMoreProps {
   pageInfo: PageInfo | null;
@@ -15,7 +14,7 @@ const LoadMore: FC<LoadMoreProps> = ({ pageInfo }) => {
 
   if (!pageInfo) return null;
 
-  const { hasPreviousPage, hasNextPage, startCursor, endCursor } = pageInfo;
+  const { hasPreviousPage, hasNextPage, endCursor } = pageInfo;
 
   if (!hasPreviousPage && !hasNextPage) return null;
 

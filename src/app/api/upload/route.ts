@@ -15,13 +15,6 @@ export async function POST(request: Request) {
       use_filename: true,
       unique_filename: false,
       overwrite: true,
-      transformation: [
-        {
-          width: 1000,
-          height: 752,
-          crop: 'scale'
-        }
-      ],
       folder: 'next13-grafbase'
     };
 

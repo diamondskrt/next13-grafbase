@@ -18,8 +18,8 @@ const EditPage: FC<EditPageProps> = async ({ params }) => {
   };
 
   return (
-    <div className="edit-project">
-      <Typography variant="h1">Edit Project</Typography>
+    <div className="edit-project grid gap-4 paddings">
+      <Typography variant="h3">Edit Project</Typography>
 
       <ProjectForm project={result?.project} />
     </div>

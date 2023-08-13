@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import classNames from 'classnames';
+import { useTheme } from 'next-themes';
 import { getProviders, signIn } from 'next-auth/react';
-
-import Button from './Button';
+import Button from '@/components/Button';
 
 interface Provider {
   id: string;
@@ -16,8 +17,15 @@ interface Provider {
 
 type Providers = Record<string, Provider>;
 
-const AuthProviders = () => {
+interface AuthProps {
+  className?: string;
+  btnColor?: string;
+}
+
+const Auth: FC<AuthProps> = ({ className }) => {
   const [providers, setProviders] = useState<Providers | null>(null);
+
+  const { theme } = useTheme();
 
   const fetchProviders = async () => {
     const res = await getProviders();
@@ -32,9 +40,13 @@ const AuthProviders = () => {
   if (!providers) return null;
 
   return (
-    <div>
+    <div className={classNames(className)}>
       {Object.values(providers).map((provider: Provider, index) => (
-        <Button key={index} onClick={() => signIn(provider?.id)}>
+        <Button
+          color={theme === 'light' ? 'dark' : 'light'}
+          key={index}
+          onClick={() => signIn(provider?.id)}
+        >
           Sign In
         </Button>
       ))}
@@ -42,4 +54,4 @@ const AuthProviders = () => {
   );
 };
 
-export default AuthProviders;
+export default Auth;

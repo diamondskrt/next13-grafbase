@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ProjectInterface, UserProfile } from '@/types/common';
+import Typography from '@/components/Typography';
 import { getUserProjects } from '@/graphql/api';
-import Typography from './Typography';
+import { ProjectInterface, UserProfile } from '@/types/common';
 
 interface GetUserProjectsResult {
   user: UserProfile;

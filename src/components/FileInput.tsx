@@ -1,8 +1,8 @@
 import { ChangeEvent, FC } from 'react';
-import Image from 'next/image';
-import { TrashIcon } from '@heroicons/react/24/solid';
-import Typography from './Typography';
 import classNames from 'classnames';
+import { TrashIcon } from '@heroicons/react/24/solid';
+import Image from 'next/image';
+import Typography from './Typography';
 
 interface FileInputProps {
   fileUrl?: string;
@@ -11,7 +11,7 @@ interface FileInputProps {
   description?: string;
   required?: boolean;
   errorMessage?: string | null;
-  onChange: (file: string | ArrayBuffer) => void;
+  onChange: (file: string | ArrayBuffer | null) => void;
 }
 
 const FileInput: FC<FileInputProps> = ({
@@ -44,12 +44,13 @@ const FileInput: FC<FileInputProps> = ({
   return (
     <div className={classNames('file-input', { required })}>
       {fileUrl ? (
-        <div className="relative aspect-square rounded-xl overflow-hidden w-[250px]">
+        <div className="relative rounded-xl overflow-hidden w-[100%] sm:w-[400px] h-[300px]">
           <Image
             src={fileUrl as string}
             fill
             blurDataURL={fileUrl as string}
             alt="project image"
+            className="object-cover"
           />
           <div className="absolute inset-0 hover:bg-black/20 flexCenter group transition-all text-white p-3">
             <div

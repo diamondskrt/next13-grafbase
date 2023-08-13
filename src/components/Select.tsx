@@ -1,9 +1,9 @@
 'use client';
 
 import { FC, useRef, useState } from 'react';
+import classNames from 'classnames';
 import TextField from './TextField';
 import Typography from './Typography';
-import classNames from 'classnames';
 import { useClickOutside } from '@/hooks/click-outside';
 
 interface SelectProps {

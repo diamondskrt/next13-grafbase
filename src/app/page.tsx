@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import ProjectCard from '@/components/ProjectCard';
 import Typography from '@/components/Typography';
+import Categories from '@/components/pages/home/Categories';
+import LoadMore from '@/components/pages/home/LoadMore';
+import ProjectCard from '@/components/pages/home/ProjectCard';
 import { fetchAllProjects } from '@/graphql/api';
 import { PageInfo, ProjectInterface } from '@/types/common';
-import Categories from '@/components/Categories';
-import LoadMore from '@/components/LoadMore';
 
 export interface ProjectSearchEdges {
   node: ProjectInterface;
@@ -39,7 +39,32 @@ const HomePage: FC<HomePageProps> = async ({
 
   return (
     <>
-      <section className="grid gap-10">
+      <section className="relative flexCenter bg-black h-[550px] overflow-hidden">
+        <video
+          className="absolute h-[100%] sm:h-auto sm:w-full max-w-none transition-all brightness-50"
+          autoPlay
+          muted
+          loop
+          data-src-lg="https://cdn.dribbble.com/uploads/39421/original/963b4f8739cbdf86ca3f3a23245efd18.mp4?1657824985"
+          data-src-sm="https://cdn.dribbble.com/uploads/39422/original/2a124f438241970f60b377e881b8dc0b.mp4?1657824997"
+        >
+          <source
+            src="https://cdn.dribbble.com/uploads/39421/original/963b4f8739cbdf86ca3f3a23245efd18.mp4?1657824985"
+            type="video/mp4"
+          />
+        </video>
+        <div className="grid text-white text-center w-full md:w-[60%] lg:w-[40%] gap-4 z-[2] p-2">
+          <Typography variant="h1" className="font-semibold">
+            Explore the world’s leading design portfolios
+          </Typography>
+          <Typography variant="body">
+            Millions of designers and agencies around the world showcase their
+            portfolio work on Dribbble - the home to the world’s best design and
+            creative professionals.
+          </Typography>
+        </div>
+      </section>
+      <section className="projects grid gap-10 paddings">
         <Categories />
 
         {projects.length ? (

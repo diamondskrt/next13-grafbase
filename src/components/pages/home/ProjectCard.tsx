@@ -3,8 +3,8 @@
 import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Typography from './Typography';
-import Icon from './Icon';
+import Typography from '@/components/Typography';
+import Icon from '@/components/Icon';
 
 interface ProjectCardProps {
   id: string;
@@ -19,7 +19,6 @@ const ProjectCard: FC<ProjectCardProps> = ({
   id,
   image,
   title,
-  creatorId,
   creatorAvatarUrl,
   creatorName
 }) => {
@@ -38,7 +37,14 @@ const ProjectCard: FC<ProjectCardProps> = ({
     <div className="shadow rounded-xl theme-bg max-w-xs overflow-hidden">
       <Link href={`/project/${id}`}>
         <div className="relative aspect-square">
-          <Image src={image} blurDataURL={image} fill priority alt={title} />
+          <Image
+            src={image}
+            blurDataURL={image}
+            fill
+            priority
+            alt={title}
+            className="object-cover"
+          />
           <div className="absolute inset-0 hover:bg-black/20 flexEnd group transition-all text-white p-3">
             <Typography
               variant="subtitle"
@@ -50,19 +56,17 @@ const ProjectCard: FC<ProjectCardProps> = ({
         </div>
       </Link>
       <div className="flexBetween gap-6 p-3">
-        <Link href={`/profile/${creatorId}`}>
-          <div className="flexStart gap-2">
-            <Image
-              src={creatorAvatarUrl}
-              blurDataURL={creatorAvatarUrl}
-              width={42}
-              height={42}
-              className="rounded-full cursor-pointer"
-              alt={creatorName}
-            />
-            <Typography variant="caption">{creatorName}</Typography>
-          </div>
-        </Link>
+        <div className="hidden 2xl:flex items-center gap-2">
+          <Image
+            src={creatorAvatarUrl}
+            blurDataURL={creatorAvatarUrl}
+            width={42}
+            height={42}
+            className="rounded-full"
+            alt={creatorName}
+          />
+          <Typography variant="caption">{creatorName}</Typography>
+        </div>
         <div className="flexStart gap-2">
           {randomLikes ? (
             <div className="flexStart gap-1">
