@@ -1,39 +1,18 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
+import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import Button from '@/components/Button';
 import { categories } from '@/constants/common';
 
 const Categories = () => {
-  const router = useRouter();
-  const pathName = usePathname();
   const searchParams = useSearchParams();
   const swiperRef = useRef<any | null>(null);
 
   const selectedCategory = searchParams.get('category');
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams as any);
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
-  );
-
-  const onSelectCategory = (category: string) => {
-    router.push(pathName + '?' + createQueryString('category', category), {
-      scroll: false
-    });
-  };
-
-  const onSelectAllCategory = () => {
-    router.push(pathName, { scroll: false });
-  };
 
   return (
     <>
@@ -45,25 +24,30 @@ const Categories = () => {
           onInit={(swiper) => (swiperRef.current = swiper)}
         >
           <SwiperSlide className="w-auto">
-            <Button
-              type="button"
-              variant={!selectedCategory ? 'default' : 'text'}
-              onClick={onSelectAllCategory}
-            >
-              All
-            </Button>
+            <Link href="/" scroll={false}>
+              <Button
+                type="button"
+                variant={!selectedCategory ? 'default' : 'text'}
+              >
+                All
+              </Button>
+            </Link>
           </SwiperSlide>
           {categories.map((category) => (
             <SwiperSlide key={category.id} className="w-auto">
-              <Button
-                type="button"
-                variant={
-                  selectedCategory === category.name ? 'default' : 'text'
-                }
-                onClick={() => onSelectCategory(category.name)}
+              <Link
+                href={{ query: { category: category.name } }}
+                scroll={false}
               >
-                {category.name}
-              </Button>
+                <Button
+                  type="button"
+                  variant={
+                    selectedCategory === category.name ? 'default' : 'text'
+                  }
+                >
+                  {category.name}
+                </Button>
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>
