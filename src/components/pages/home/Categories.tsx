@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -15,8 +15,20 @@ const Categories = () => {
 
   const selectedCategory = searchParams.get('category');
 
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams as any);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   const onSelectCategory = (category: string) => {
-    router.push(`${pathName}?category=${category}`, { scroll: false });
+    router.push(pathName + '?' + createQueryString('category', category), {
+      scroll: false
+    });
   };
 
   const onSelectAllCategory = () => {
